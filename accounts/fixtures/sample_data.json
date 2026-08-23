@@ -1,0 +1,102 @@
+[
+  {
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$tcfvujBGRhVVlf5GklfccM$Mb8z7+sid2JPaPllj+zhFpAIC0VUPAr0OA3JA9QStJg=",
+      "last_login": "2025-02-27T10:39:29.715Z",
+      "is_superuser": true,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2025-02-15T10:57:42Z",
+      "username": "admin",
+      "email": "admin@admin.com",
+      "icon": "",
+      "status_message": "今年から大学生です！",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$HPupeGrTUMeqZ8vdPUbSRa$W6sw9xPOh7UDcEosY6vcTWMKXYIdotc4cHZtKapMc9A=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-02-15T15:27:30.864Z",
+      "username": "test1",
+      "email": "test@test1.com",
+      "icon": "",
+      "status_message": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$kojwrfDoOHS8ln2Welc8Ou$XCoGRxcrHQ5X6dNHwdun6KAjI6w6Lo0bKlGiBz6qrDc=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-02-15T15:31:18Z",
+      "username": "test2",
+      "email": "test@test2.com",
+      "icon": "",
+      "status_message": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$8LpgnBuI89UAPQbUUwAnJy$178lpoJaRLTu6nIJZkUoM1QrPC7hDYXeGzBBm3uuelU=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-02-15T16:19:30Z",
+      "username": "test3",
+      "email": "test@test3.com",
+      "icon": "",
+      "status_message": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$pOFOrRniNq9nJCrakZL8HI$uFppU0NqRSvW+NPEyRw/I+xQ2X6k3KXuIxKPirrDcy0=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-02-25T15:24:30.705Z",
+      "username": "test4",
+      "email": "test4@test.com",
+      "icon": "",
+      "status_message": "ステータスメッセージを新しく書きました。",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]
