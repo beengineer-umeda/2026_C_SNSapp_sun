@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework import generics, mixins
 
-# Create your views here.
+from .serializers import RegisterSerializer
+
+
+class RegisterView(generics.GenericAPIView, mixins.CreateModelMixin):
+    serializer_class = RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
