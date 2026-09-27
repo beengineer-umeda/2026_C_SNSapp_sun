@@ -6,8 +6,5 @@ abstract class Routes {
 }
 
 final routes = <GoRoute>[
-  GoRoute(
-    path: Routes.login,
-    builder: (ctx, state) => const LoginPage(),
-  ),
+  GoRoute(path: Routes.login, builder: (ctx, state) => const LoginPage()),
 ];

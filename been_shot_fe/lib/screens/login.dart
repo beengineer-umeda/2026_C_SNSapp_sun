@@ -1,7 +1,11 @@
 import 'dart:core';
 
+import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+
+import '../models/login_user.dart';
+import '../services/account.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,10 +15,52 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Future<void> handleSubmit(
+    BuildContext context, {
+    required LoginUser formData,
+  }) async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      final accountService = AccountService();
+      await accountService.login(loginUser: formData);
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('ログインしました')));
+    } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+      final data = e.response?.data;
+      if (statusCode == 401 && data is Map<String, dynamic>) {
+        final errors = data;
+        setState(() {
+          _invalidFieldError = errors['detail'] as String?;
+        });
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('ログインに失敗しました')));
+      }
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('予期せぬエラーが発生しました')));
+      }
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  bool _isLoading = false;
+  String? _invalidFieldError;
   bool _isObscure = true;
   final _formKey = GlobalKey<FormState>();
   final _emailKey = GlobalKey<FormFieldState>();
-  final _passwordlKey = GlobalKey<FormFieldState>();
+  final _passwordKey = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +86,12 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           labelText: 'メールアドレス',
+                          errorText: _invalidFieldError,
                         ),
                         validator: (value) {
+                          setState(() {
+                            _invalidFieldError = null;
+                          });
                           if (value == null || value.isEmpty) {
                             return 'メールアドレスを入力してください';
                           }
@@ -53,12 +103,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        key: _passwordlKey,
+                        key: _passwordKey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                           labelText: 'パスワード',
+                          errorText: _invalidFieldError,
                           suffixIcon: IconButton(
                             icon: Icon(
                               _isObscure
@@ -74,6 +125,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         obscureText: _isObscure,
                         validator: (value) {
+                          setState(() {
+                            _invalidFieldError = null;
+                          });
                           if (value == null || value.isEmpty) {
                             return 'パスワードを入力してください';
                           }
@@ -102,15 +156,27 @@ class _LoginPageState extends State<LoginPage> {
                             ).colorScheme.primaryContainer,
                           ),
                           onPressed: () {
-                            if (_formKey.currentState?.validate() ?? false) {}
+                            if (_formKey.currentState?.validate() ?? false) {
+                              final formData = LoginUser(
+                                email: _emailKey.currentState?.value,
+                                password: _passwordKey.currentState?.value,
+                              );
+                              handleSubmit(context, formData: formData);
+                            }
                           },
-                          child: const Text(
-                            'ログイン',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
+                          child: _isLoading
+                              ? const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(),
+                                )
+                              : const Text(
+                                  'ログイン',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
                         ),
                       ),
                     ],
