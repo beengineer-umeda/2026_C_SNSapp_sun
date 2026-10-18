@@ -10,9 +10,7 @@ import '../routes.dart';
 import '../services/account.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({
-    super.key,
-  });
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -28,15 +26,11 @@ class _LoginPageState extends State<LoginPage> {
     });
     try {
       final accountService = AccountService();
-      await accountService.login(
-        loginUser: formData,
-      );
+      await accountService.login(loginUser: formData);
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('ログインしました'),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('ログインしました')));
     } on DioException catch (e) {
       final statusCode = e.response?.statusCode;
       final data = e.response?.data;
@@ -46,17 +40,15 @@ class _LoginPageState extends State<LoginPage> {
           _invalidFieldError = errors['detail'] as String?;
         });
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('ログインに失敗しました'),
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('ログインに失敗しました')));
       }
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('予期せぬエラーが発生しました')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('予期せぬエラーが発生しました')));
       }
     } finally {
       setState(() {
@@ -76,27 +68,19 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ログイン'),
-      ),
+      appBar: AppBar(title: const Text('ログイン')),
       body: Center(
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: const EdgeInsets.only(
-              top: 50,
-              right: 20,
-              left: 20,
-            ),
+            padding: const EdgeInsets.only(top: 50, right: 20, left: 20),
             child: Column(
               children: [
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 30),
-                      ),
+                      const Padding(padding: EdgeInsets.only(bottom: 30)),
                       TextFormField(
                         key: _emailKey,
                         decoration: InputDecoration(
@@ -119,9 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       TextFormField(
                         key: _passwordKey,
                         decoration: InputDecoration(
@@ -154,9 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: TextButton(
@@ -166,9 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: const Text('アカウントを作成する'),
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: screenWidth * 0.9,
                         child: ElevatedButton(
@@ -177,8 +155,9 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(16),
                             ),
                             elevation: 0,
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primaryContainer,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primaryContainer,
                           ),
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {
@@ -186,10 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                                 email: _emailKey.currentState?.value,
                                 password: _passwordKey.currentState?.value,
                               );
-                              handleSubmit(
-                                context,
-                                formData: formData,
-                              );
+                              handleSubmit(context, formData: formData);
                             }
                           },
                           child: _isLoading
