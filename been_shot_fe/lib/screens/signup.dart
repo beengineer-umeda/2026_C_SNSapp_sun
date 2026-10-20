@@ -34,6 +34,7 @@ class _SignupPageState extends State<SignupPage> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('アカウントが作成されました')));
+      await GoRouter.of(context).replace(Routes.login);
     } on DioException catch (e) {
       final statusCode = e.response?.statusCode;
       final data = e.response?.data;
