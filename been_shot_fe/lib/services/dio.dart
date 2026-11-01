@@ -2,15 +2,20 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import 'auth_interceptor.dart';
+
 class DioClient {
   factory DioClient() => _instance;
 
   DioClient._createSingleton() {
+    authDio = _createDio();
+    authDio.interceptors.add(AuthInterceptor(authDio));
     unauthDio = _createDio();
   }
 
   static final DioClient _instance = DioClient._createSingleton();
 
+  late final Dio authDio;
   late final Dio unauthDio;
 
   Dio _createDio() {

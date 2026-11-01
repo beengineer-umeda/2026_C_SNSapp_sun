@@ -1,5 +1,6 @@
 import '../models/login_user.dart';
 import '../models/signup_user.dart';
+import '../repositories/secure_storage.dart';
 import '../services/dio.dart';
 
 class AccountService {
@@ -16,7 +17,16 @@ class AccountService {
   Future<void> login({required LoginUser loginUser}) async {
     final dioClient = DioClient();
     final url = '$baseUrl/token/';
-    await dioClient.unauthDio.post(url, data: loginUser.toJson());
+    final response = await dioClient.unauthDio.post(
+      url,
+      data: loginUser.toJson(),
+    );
+
+    final accessToken = response.data['access'] as String;
+    final refreshToken = response.data['refresh'] as String;
+    final secureStorage = SecureStorage();
+    await secureStorage.saveToken('access', accessToken);
+    await secureStorage.saveToken('refresh', refreshToken);
   }
 
   Future<void> signup({required SignupUser signupUser}) async {

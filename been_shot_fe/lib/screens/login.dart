@@ -31,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('ログインしました')));
+      await GoRouter.of(context).replace(Routes.home);
     } on DioException catch (e) {
       final statusCode = e.response?.statusCode;
       final data = e.response?.data;
