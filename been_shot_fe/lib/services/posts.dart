@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import '../models/posts.dart';
 
 import 'dio.dart';
