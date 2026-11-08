@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'routes.dart';
 
 void main() async {
-  runApp(const BeEnShotApp());
+  runApp(const ProviderScope(child: BeEnShotApp()));
 }
 
 class BeEnShotApp extends StatelessWidget {
