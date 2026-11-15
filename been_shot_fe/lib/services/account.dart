@@ -34,4 +34,22 @@ class AccountService {
     final url = '$baseUrl/users/';
     await dioClient.unauthDio.post(url, data: signupUser.toJson());
   }
+
+  Future<String?> refreshAccessToken(String refreshToken) async {
+    final dioClient = DioClient();
+    final url = '$baseUrl/token/refresh/';
+    final response = await dioClient.unauthDio.post(
+      url,
+      data: {'refresh': refreshToken},
+    );
+
+    if (response.statusCode == 200) {
+      final newAccessToken = response.data['access'];
+      final secureStorage = SecureStorage();
+      await secureStorage.saveToken('access', newAccessToken);
+      return newAccessToken;
+    } else {
+      throw Exception('アクセストークンの更新に失敗しました');
+    }
+  }
 }

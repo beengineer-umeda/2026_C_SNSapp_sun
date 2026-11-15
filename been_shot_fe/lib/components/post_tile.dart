@@ -30,9 +30,8 @@ class PostTile extends StatelessWidget {
                       backgroundImage: post.user.icon != null
                           ? NetworkImage(post.user.icon!)
                           : const AssetImage(
-                                  'assets/images/default-user-icon.png',
-                                )
-                                as ImageProvider,
+                              'assets/images/default-user-icon.png',
+                            ) as ImageProvider,
                       radius: 10,
                     ),
                     const SizedBox(width: 10),
@@ -58,12 +57,18 @@ class PostTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(post.content, textAlign: TextAlign.left),
+              child: Text(
+                post.content,
+                textAlign: TextAlign.left,
+              ),
             ),
           ),
           if (post.photo != null)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
+              ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
@@ -74,6 +79,30 @@ class PostTile extends StatelessWidget {
                 ),
               ),
             ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+              top: 2,
+              bottom: 10,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Icons.favorite),
+                ),
+                const SizedBox(
+                  width: 2,
+                ),
+                const Text('0'),
+                const SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

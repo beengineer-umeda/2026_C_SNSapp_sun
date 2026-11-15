@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../components/bottom_bar.dart';
+import '../components/floating_action_button.dart';
 import '../components/post_tile.dart';
 import '../providers/post_list.dart';
 
@@ -12,7 +14,9 @@ class HomePage extends ConsumerWidget {
     final asyncPosts = ref.watch(postListProvider);
 
     return Scaffold(
-      appBar: AppBar(toolbarHeight: 5.0),
+      appBar: AppBar(
+        toolbarHeight: 5.0,
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(postListProvider);
@@ -27,7 +31,10 @@ class HomePage extends ConsumerWidget {
                 children: const [
                   SizedBox(height: 80),
                   Center(
-                    child: Text('投稿がありません', style: TextStyle(fontSize: 18)),
+                    child: Text(
+                      '投稿がありません',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                 ],
               );
@@ -44,6 +51,8 @@ class HomePage extends ConsumerWidget {
           },
         ),
       ),
+      bottomNavigationBar: const CustomBottomBar(),
+      floatingActionButton: const CustomFloatingActionButton(),
     );
   }
 }
